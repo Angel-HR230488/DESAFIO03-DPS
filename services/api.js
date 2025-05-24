@@ -1,8 +1,29 @@
-// services/api.js
 import axios from 'axios';
 
-const api = axios.create({
-  baseURL: '192.168.3.28', // Reemplaza con tu IP local y puerto del backend
-});
+export const updateBookStatus = async (bookId, status) => {
+  try {
+    const response = await axios.put(`http://localhost:5000/api/books/${bookId}`, { status }, {
+      headers: {
+        Authorization: `Bearer TU_TOKEN_AQUI`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error al actualizar estado:", error.response?.data || error.message);
+    return null;
+  }
+};
 
-export default api;
+export const deleteBook = async (bookId) => {
+  try {
+    const response = await axios.delete(`http://localhost:5000/api/books/${bookId}`, {
+      headers: {
+        Authorization: `Bearer TU_TOKEN_AQUI`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error al borrar libro:", error.response?.data || error.message);
+    return null;
+  }
+};
